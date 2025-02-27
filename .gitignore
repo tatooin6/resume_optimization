@@ -1,0 +1,11 @@
+# Archivos de entorno virtual
+venv/
+.env
+
+# Cachés de Python
+__pycache__/
+*.pyc
+.DS_Store
+
+app/output/*
+app/resume.md

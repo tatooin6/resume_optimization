@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+google-generativeai
+markdown
+weasyprint
+python-dotenv
