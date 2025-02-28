@@ -1,4 +1,4 @@
-![Linting](https://github.com/tatooin6/resume_optimization.git/actions/workflows/linting.yml/badge.svg)
+![Linting](https://github.com/tatooin6/resume_optimization/actions/workflows/linting.yml/badge.svg)
 
 # Resume Optimizer with Google Gemini and FastAPI
 
