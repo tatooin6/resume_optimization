@@ -32,6 +32,8 @@ google-generativeai
 markdown
 weasyprint
 python-dotenv
+pytest
+flake8
 ```
 
 4. Create an .env file and add your Google Gemini API Key:
@@ -45,7 +47,7 @@ GEMINI_API_KEY="api-key-here"
 3. Download the optimized resume in PDF format. (When fastAPI is integrated to the service)
 
 ## Technologies Used
-- Python + FastAPI
+- Python + FastAPI (future implementation)
 - Google Gemini API
 - Markdown + WeasyPrint (for PDF conversion)
 - Uvicorn (to run the server)(future implementation)
