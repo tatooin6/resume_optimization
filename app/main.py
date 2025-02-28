@@ -30,7 +30,8 @@ def generate_custom_resume(resume_md, job_description):
     prompt = f"""
     You are an expert on recruitment and curriculum optimization
 
-    Take the next curriculum in Markdown format and make adjustments so it fits with the job description proportioned.
+    Take the next curriculum in Markdown format and make adjustments so it fits
+    with the job description proportioned.
 
     - Highlight skills and experiences relevant to the position.
     - Adjust the tone and approach based on the industry and role.
@@ -54,17 +55,21 @@ def generate_custom_resume(resume_md, job_description):
     )
     return response.text
 
+
 def save_to_markdown(content, filename="../data/outputs/optimized_resume.md"):
     with open(filename, "w", encoding="utf-8") as file:
         file.write(content)
 
+
 def convert_markdown_to_html_(md_content):
     return markdown.markdown(md_content)
+
 
 def convert_html_to_pdf(html_content, output_file="../data/outputs/optimized_resume.pdf"):
     pdf_path = os.path.join(os.getcwd(), output_file)
     HTML(string=html_content).write_pdf(pdf_path)
     return pdf_path
+
 
 if __name__ == "__main__":
     resume_md = load_file("../data/inputs/resume.md")
@@ -73,10 +78,10 @@ if __name__ == "__main__":
 
     new_resume_md = generate_custom_resume(resume_md, job_description)
 
-    save_to_markdown(new_resume_md)    
+    save_to_markdown(new_resume_md)
 
     resume_html = convert_markdown_to_html_(new_resume_md)
 
     pdf_path = convert_html_to_pdf(resume_html)
-    
+
     print(f"PDF created on {pdf_path}")
