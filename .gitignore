@@ -7,5 +7,5 @@ __pycache__/
 *.pyc
 .DS_Store
 
-app/output/*
-app/resume.md
+data/outputs/*
+data/inputs/*

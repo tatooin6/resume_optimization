@@ -34,7 +34,7 @@ python-dotenv
 
 4. Create an .env file and add your Google Gemini API Key:
 ```bash
-GEMINI_API_KEY="your-api-key-here"
+GEMINI_API_KEY="api-key-here"
 ```
 
 ## Usage
@@ -48,12 +48,3 @@ GEMINI_API_KEY="your-api-key-here"
 - Markdown + WeasyPrint (for PDF conversion)
 - Uvicorn (to run the server)(future implementation)
 
-
-#### Generate a `requirements.txt`
-This file allows you to install all the necessary dependencies with `pip install -r requirements.txt`
-
-Run this command in the terminal to **generate the `requirements.txt` automatically**:
-```bash
-pip freeze > requirements.txt
-```
----

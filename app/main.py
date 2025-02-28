@@ -19,7 +19,7 @@ genai.configure(api_key=genai_api_key)
 model = genai.GenerativeModel("gemini-2.0-flash")
 
 
-def load_markdown_resume(file_path):
+def load_file(file_path):
     with open(file_path, "r", encoding="utf-8") as file:
         return file.read()
 
@@ -54,26 +54,24 @@ def generate_custom_resume(resume_md, job_description):
     )
     return response.text
 
-def save_to_markdown(content, filename="optimized_resume.md"):
+def save_to_markdown(content, filename="../data/outputs/optimized_resume.md"):
     with open(filename, "w", encoding="utf-8") as file:
         file.write(content)
 
 def convert_markdown_to_html_(md_content):
     return markdown.markdown(md_content)
 
-def convert_html_to_pdf(html_content, output_file="optimized_resume.pdf"):
+def convert_html_to_pdf(html_content, output_file="../data/outputs/optimized_resume.pdf"):
     pdf_path = os.path.join(os.getcwd(), output_file)
     HTML(string=html_content).write_pdf(pdf_path)
     return pdf_path
 
 if __name__ == "__main__":
-    resume_md = load_markdown_resume("resume.md")
+    resume_md = load_file("../data/inputs/resume.md")
 
-    job_description = input("Enter Job Description: ")
+    job_description = load_file("../data/inputs/job_description.txt")
 
     new_resume_md = generate_custom_resume(resume_md, job_description)
-
-    # print(new_resume_md)
 
     save_to_markdown(new_resume_md)    
 
@@ -82,16 +80,3 @@ if __name__ == "__main__":
     pdf_path = convert_html_to_pdf(resume_html)
     
     print(f"PDF created on {pdf_path}")
-
-
-
-
-
-
-
-
-
-
-
-
-
