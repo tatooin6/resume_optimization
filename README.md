@@ -34,6 +34,8 @@ weasyprint
 python-dotenv
 pytest
 flake8
+celery
+redis
 ```
 
 4. Create an .env file and add your Google Gemini API Key:
@@ -51,4 +53,59 @@ GEMINI_API_KEY="api-key-here"
 - Google Gemini API
 - Markdown + WeasyPrint (for PDF conversion)
 - Uvicorn (to run the server)(future implementation)
+
+## For Developers
+
+### Redis
+Installing on Mac with
+```bash
+brew install redis
+```
+
+To execute redis server enter
+```bash
+redis-server
+```
+--- 
+Installing on Linux with
+```bash
+sudo apt install redis -y
+```
+
+And start it with
+```bash
+sudo systemctl start redis
+```
+---
+Installing on Windows with
+```bash
+docker run -d --name redis -p 6379:6379 redis
+```
+---
+On any of the previous os test if Redis is working with
+```bash
+redis-cli ping
+``` 
+It should response with "PONG", that means all's good
+
+#### Usage
+
+To start Redis:
+```bash
+redis-server
+```
+
+Start Uvicorn server:
+```bash
+uvicorn app.main:app --reload
+```
+
+Start Celery:
+```bash
+celery -A app.celery_config.celery_app worker --loglevel=info
+```
+
+
+
+
 
