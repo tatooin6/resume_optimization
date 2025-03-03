@@ -6,3 +6,5 @@ weasyprint
 python-dotenv
 pytest
 flake8
+celery
+redis
