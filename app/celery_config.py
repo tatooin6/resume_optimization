@@ -7,7 +7,8 @@ REDIS_URL = "redis://localhost:6379/0"
 celery_app = Celery(
     "resume_optimizer",  # app name
     broker=REDIS_URL,
-    backend=REDIS_URL
+    backend=REDIS_URL,
+    include=["app.tasks"]
 )
 
 

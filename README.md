@@ -99,12 +99,19 @@ Start Uvicorn server:
 ```bash
 uvicorn app.main:app --reload
 ```
+If there are problems with this then we start the server providing more data:
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
 
 Start Celery:
 ```bash
 celery -A app.celery_config.celery_app worker --loglevel=info
 ```
-
+or
+```bash
+celery -A app.celery_config worker --loglevel=info --queues=resume_task
+```
 
 
 

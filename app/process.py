@@ -56,17 +56,22 @@ def generate_custom_resume(resume_md, job_description):
     return response.text
 
 
-def save_to_markdown(content, filename="../data/outputs/optimized_resume.md"):
+def save_to_markdown(content, filename="data/outputs/optimized_resume.md"):
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
     with open(filename, "w", encoding="utf-8") as file:
         file.write(content)
 
 
-def convert_markdown_to_html_(md_content):
+def convert_markdown_to_html(md_content):
     return markdown.markdown(md_content)
 
 
-def convert_html_to_pdf(html_content, output_file="../data/outputs/optimized_resume.pdf"):
-    pdf_path = os.path.join(os.getcwd(), output_file)
+def convert_html_to_pdf(html_content, output_file="data/outputs/optimized_resume.pdf"):
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+
+    pdf_path = os.path.abspath(output_file)
+    print(f">>>>>>>>  Generating PDF in: {pdf_path}")
     HTML(string=html_content).write_pdf(pdf_path)
     return pdf_path
 
@@ -80,8 +85,8 @@ if __name__ == "__main__":
 
     save_to_markdown(new_resume_md)
 
-    resume_html = convert_markdown_to_html_(new_resume_md)
+    resume_html = convert_markdown_to_html(new_resume_md)
 
     pdf_path = convert_html_to_pdf(resume_html)
 
-    print(f"PDF created on {pdf_path}")
+    print(f"PDF created in {pdf_path}")
