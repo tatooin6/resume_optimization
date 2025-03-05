@@ -113,6 +113,10 @@ or
 celery -A app.celery_config worker --loglevel=info --queues=resume_task
 ```
 
-
+#### Formating
+To check formating run the next command:
+```bash
+flake8 app/ tests/
+```
 
 
