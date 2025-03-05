@@ -34,6 +34,8 @@ weasyprint
 python-dotenv
 pytest
 flake8
+celery
+redis
 ```
 
 4. Create an .env file and add your Google Gemini API Key:
@@ -52,3 +54,10 @@ GEMINI_API_KEY="api-key-here"
 - Markdown + WeasyPrint (for PDF conversion)
 - Uvicorn (to run the server)(future implementation)
 
+#### Formating
+To check formating run the next command:
+```bash
+flake8 app/ tests/
+```
+
+To collaborate check [development docs](./docs/development.md).

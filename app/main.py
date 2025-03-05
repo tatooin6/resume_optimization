@@ -1,87 +1,77 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Feb 21 11:55:47 2025
 
-@author: apantoja03130
-"""
+from fastapi import FastAPI
+from app.tasks import process_resume
+from app.models import OptimizationRequest
 
-import google.generativeai as genai
-import markdown
-import os
-from weasyprint import HTML
-from dotenv import load_dotenv
-
-load_dotenv()
-genai_api_key = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key=genai_api_key)
-
-model = genai.GenerativeModel("gemini-2.0-flash")
+app = FastAPI()
 
 
-def load_file(file_path):
-    with open(file_path, "r", encoding="utf-8") as file:
-        return file.read()
+@app.get("/")
+def read_root():
+    return {"server": "working fine"}
 
 
-def generate_custom_resume(resume_md, job_description):
-    """ Resume optimization based on Job Description """
+@app.post("/optimization_request/")
+def optimization_request(request: OptimizationRequest):
+    """
+    Test Optimization request shape.
 
-    prompt = f"""
-    You are an expert on recruitment and curriculum optimization
+    Parameters
+    ----------
+    request : OptimizationRequest
+        Optimization request shape.
 
-    Take the next curriculum in Markdown format and make adjustments so it fits
-    with the job description proportioned.
+    Returns
+    -------
+    request : TYPE
+        Optimization request shape..
 
-    - Highlight skills and experiences relevant to the position.
-    - Adjust the tone and approach based on the industry and role.
-    - Keep the original structure, but modify the content intelligently.
+    """
+    return request
 
-    ## Curriculum
-    {resume_md}
 
-    ## Job Description
-    {job_description}
+@app.post("/debug_task/")
+def debug_task(request: OptimizationRequest):
+    """
+    Debugs process_resume task.
 
-    Return only the optimized curriculum in Markdown format, without comments nor explanations
+    Parameters
+    ----------
+    request : OptimizationRequest
+        Optimization request interface.
+
+    Returns
+    -------
+    dictionary
+        Return message and pdf_path as return of the process task.
+
+    """
+    return process_resume(request.dict())
+
+
+@app.post("/upload_resume/")
+def upload_resume(resume_data: OptimizationRequest):
     """
 
-    response = model.generate_content(
-        prompt,
-        generation_config=genai.types.GenerationConfig(
-            max_output_tokens=380,
-            temperature=0.5
-        )
+    Parameters
+    ----------
+    resume_data : OptimizationRequest
+        Receives resume and job description.
+
+    Returns
+    -------
+    dict
+        Return task_id and task status.
+
+    """
+
+    task = process_resume.apply_async(
+        kwargs={"request_data": resume_data.dict()},
+        queue="resume_tasks"
     )
-    return response.text
 
-
-def save_to_markdown(content, filename="../data/outputs/optimized_resume.md"):
-    with open(filename, "w", encoding="utf-8") as file:
-        file.write(content)
-
-
-def convert_markdown_to_html_(md_content):
-    return markdown.markdown(md_content)
-
-
-def convert_html_to_pdf(html_content, output_file="../data/outputs/optimized_resume.pdf"):
-    pdf_path = os.path.join(os.getcwd(), output_file)
-    HTML(string=html_content).write_pdf(pdf_path)
-    return pdf_path
-
-
-if __name__ == "__main__":
-    resume_md = load_file("../data/inputs/resume.md")
-
-    job_description = load_file("../data/inputs/job_description.txt")
-
-    new_resume_md = generate_custom_resume(resume_md, job_description)
-
-    save_to_markdown(new_resume_md)
-
-    resume_html = convert_markdown_to_html_(new_resume_md)
-
-    pdf_path = convert_html_to_pdf(resume_html)
-
-    print(f"PDF created on {pdf_path}")
+    return {
+        "task_id": task.id,
+        "status": "Processing"
+    }
