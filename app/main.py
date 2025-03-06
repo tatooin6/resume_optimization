@@ -3,6 +3,7 @@
 from fastapi import FastAPI
 from app.tasks import process_resume
 from app.models import OptimizationRequest
+from app.celery_config import celery_app
 
 app = FastAPI()
 
@@ -65,13 +66,23 @@ def upload_resume(resume_data: OptimizationRequest):
         Return task_id and task status.
 
     """
-
+    print(">>>>>>>> BEFORE CELERY TASK")
     task = process_resume.apply_async(
         kwargs={"request_data": resume_data.dict()},
         queue="resume_tasks"
     )
-
+    print(">>>>>>>> AFTER CELERY TASK")
     return {
         "task_id": task.id,
         "status": "Processing"
+    }
+
+
+@app.get("/task_status/{task_id}")
+def task_status(task_id: str):
+    task_result = celery_app.AsyncResult(task_id)
+    return {
+        "task_id": task_id,
+        "status": task_result.status,
+        "result": task_result.result
     }

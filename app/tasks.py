@@ -18,6 +18,7 @@ def process_resume(request_data: dict):
     Processing resume optimization on background.
     """
     logging.info(">>>>>> Celery has received the task.")
+    print(">>>>>> Celery has received the task.")
 
     request = OptimizationRequest(**request_data)
 
@@ -32,6 +33,7 @@ def process_resume(request_data: dict):
     pdf_path = convert_html_to_pdf(resume_html)
 
     logging.info(f">>>>>> PDF file generated in: {pdf_path}")
+    print(f">>>>>> PDF file generated in: {pdf_path}")
 
     return {
         "message": "CV processed correctly.",
