@@ -8,15 +8,16 @@ This project allows to optimize resumes based on a job description using the Goo
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/tatooin6/resume_optimization.git resumer
-cd resumer
+git clone https://github.com/tatooin6/resume_optimization.git resume_optimizer
+cd resume_optimizer
 ```
 
 2. Create a virtual environment and activate it:
 ```bash
 python -m venv venv
-source venv/bin/activate  # macOS/Linux
-venv\Scripts\activate     # Windows
+source venv/bin/activate                # macOS/Linux
+venv\Scripts\activate                   # Windows
+conda create --name fastapi python=3.1  # With conda
 ```
 
 3. Install the dependencies:
@@ -46,13 +47,13 @@ GEMINI_API_KEY="api-key-here"
 ## Usage
 1. Upload a resume in Markdown format.
 2. Enter the job description.
-3. Download the optimized resume in PDF format. (When fastAPI is integrated to the service)
+3. Download the optimized resume in Markdown format (polling with FastAPI).
 
 ## Technologies Used
-- Python + FastAPI (future implementation)
+- Python + FastAPI
 - Google Gemini API
 - Markdown + WeasyPrint (for PDF conversion)
-- Uvicorn (to run the server)(future implementation)
+- Uvicorn (to run the server)
 
 #### Formating
 To check formating run the next command:
