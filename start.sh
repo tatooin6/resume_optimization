@@ -30,7 +30,7 @@ fi
 
 # Celery
 echo "Starting Celery Worker"
-celery -A app.celery_config worker --loglevel=info --queues=resume_task &
+celery -A app.celery_config worker --loglevel=info --queues=resume_tasks &
 CELERY_PID=$!
 sleep 2
 

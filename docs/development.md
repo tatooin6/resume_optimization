@@ -54,7 +54,7 @@ celery -A app.celery_config.celery_app worker --loglevel=info
 ```
 or
 ```bash
-celery -A app.celery_config worker --loglevel=info --queues=resume_task
+celery -A app.celery_config worker --loglevel=info --queues=resume_tasks
 ```
 
 To start all the services you can run start.sh on the terminal. If all the services start succesfully 
